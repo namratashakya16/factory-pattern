@@ -1,7 +1,7 @@
 <?php
    /*
    Plugin Name: Design Pattern
-   Plugin URI: http://localhost/namrata/wordpress/wp-content/plugins/property
+   Plugin URI: http://localhost/namrata/wordpress/wp-content/plugins/
    description: xyz 
    Version: 1.2
    Author: namrata
@@ -34,12 +34,29 @@ class Factory{
         if ($type=="GujaratiThali") 
         {       
         $order = $BaseThali->createThali("GujaratiThali", $plate);
+
         $html.="<tr><th>Ordered Gujarati Thali</th></tr>";
+
+        $plate->addSabji = "140";
+        $plate->addRoti = "8";
+        $plate->addRice = "70";
+        $plate->addDal = "65";
+        $plate->extra = "140";
+
          }
         else{
-        $order = $BaseThali->createThali("PunjabiThali", $plate); 
-        $html.="<tr><th>Ordered Punjabi Thali</th></tr>";        
-         $html.="<td>" . $order->saag() . "</td>";                       
+        $order = $BaseThali->createThali("PunjabiThali", $plate);
+
+        $plate->addSabji = "140";
+        $plate->addRoti = "10";
+        $plate->addRice = "70";
+        $plate->addDal = "65"; 
+        $plate->saag = "55"; 
+        $plate->extra = "160";
+
+         $html.="<tr><th>Ordered Punjabi Thali</th></tr>";        
+         $html.="<td>" . $order->saag() . "</td>"; 
+                               
         }
         $html.="<tr><td>" .  $order->addSabji() . "</td></tr>"; 
         $html.="<tr><td>" . $order->addRoti() . "</td></tr>";
@@ -74,20 +91,20 @@ class GujaratiThali implements Thali{
     public function __construct(Make $plate) {
         $this->make = $plate;
     }
-    public function addSabji(){
-        return "2 sabji in gujarati thali (per :- 90) <br/>";
+    public function addSabji(){        
+        return "2 sabji in gujarati thali (per :- ".$this->make->addSabji .") <br/>";
     }
     public function addRoti(){
-        return "4 roti in gujarati thali (per :- 8)<br/>";
+        return "4 roti in gujarati thali (per :- ".$this->make->addRoti .")<br/>";
     }
     public function addRice(){
-        return "1 plate rice in gujarati thali (per :- 60)<br/>";
+        return "1 plate rice in gujarati thali (per :- ".$this->make->addRice .")<br/>";
     }
     public function addDal(){
-        return "1 plate dal in gujarati thali (per :- 70)<br/>";
+        return "1 plate dal in gujarati thali (per :- ".$this->make->addDal .")<br/>";
     }
     public function extra(){
-        return "extra dishes in gujarati thali :- Gujarati-Mixed-Veg-Shaak, Kandvi, Gujarati Aloo (for :-120) <br/>";
+        return "extra dishes in gujarati thali :- Gujarati-Mixed-Veg-Shaak, Kandvi, Gujarati Aloo (for :- ".$this->make->extra .") <br/>";
     }
 
 }
@@ -99,22 +116,22 @@ class PunjabiThali  implements Thali{
         $this->make = $plate;
     }
     public function addSabji(){
-        return "1 sabji in punjabi thali (per :- 100)";
+        return "1 sabji in punjabi thali (per :- ".$this->make->addSabji .")";
     }
     public function addRoti(){
-        return "5 roti in punjabi thali (per :- 10)";
+        return "5 roti in punjabi thali (per :- ".$this->make->addRoti .")";
     }
     public function addRice(){
-        return "1 platerice in punjabi thali (per :- 75)";
+        return "1 platerice in punjabi thali (per :- ".$this->make->addRice .")";
     }
     public function addDal(){
-        return "1 plate dal makhani in punjabi thali (per :- 80)";
+        return "1 plate dal makhani in punjabi thali (per :- ".$this->make->addDal .")";
     }
     public function saag(){
-        return "1 plate Sarson in punjabi thali (for :-50)";
+        return "1 plate Sarson in punjabi thali (for :-".$this->make->saag .")";
     }
     public function extra(){
-        return "extra dishes in punjabi thali :- Chole Bhature(for :-60)";
+        return "extra dishes in punjabi thali :- Chole Bhature(for :-".$this->make->extra .")";
     }
 }
 
